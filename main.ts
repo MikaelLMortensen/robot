@@ -1,65 +1,28 @@
 radio.onReceivedString(function (receivedString) {
     arr = receivedString.split(";")
     speedLeft = parseFloat(arr[0])
-    basic.clearScreen()
-    if (speedLeft < 0){
-        basic.showLeds(`
-        . . . . .
-        . . . . .
-        . . . . .
-        # # . . .
-        # # . . .
-        `)
-        kitronik_motor_driver.motorOn(
-            kitronik_motor_driver.Motors.Motor1, 
-            kitronik_motor_driver.MotorDirection.Reverse, 
-            Math.abs(speedLeft))
+    if (speedLeft < 0) {
+        kitronik_klip_motor.motorOn(
+            kitronik_klip_motor.Motors.Motor1, 
+            kitronik_klip_motor.MotorDirection.Reverse, Math.abs(speedLeft))
     } else {
-        basic.showLeds(`
-        # # . . .
-        # # . . .
-        . . . . .
-        . . . . .
-        . . . . .
-        `)
-        kitronik_motor_driver.motorOn(
-            kitronik_motor_driver.Motors.Motor1, 
-            kitronik_motor_driver.MotorDirection.Forward, 
-            Math.abs(speedLeft))
+        kitronik_klip_motor.motorOn(
+            kitronik_klip_motor.Motors.Motor1, 
+            kitronik_klip_motor.MotorDirection.Forward, speedLeft)
     }
     speedRight = parseFloat(arr[1])
-    if (speedRight < 0){
-        basic.showLeds(`
-        . . . . .
-        . . . . .
-        . . . . .
-        . . . # #
-        . . . # #
-        `)
-        kitronik_motor_driver.motorOn(
-            kitronik_motor_driver.Motors.Motor2, 
-            kitronik_motor_driver.MotorDirection.Reverse, 
-            Math.abs(speedRight))
-
+    if (speedRight < 0) {
+        kitronik_klip_motor.motorOn(
+            kitronik_klip_motor.Motors.Motor2, 
+            kitronik_klip_motor.MotorDirection.Reverse, Math.abs(speedLeft))
     } else {
-        basic.showLeds(`
-        . . . # #
-        . . . # #
-        . . . . .
-        . . . . .
-        . . . . .
-        `)
-        kitronik_motor_driver.motorOn(
-            kitronik_motor_driver.Motors.Motor2, 
-            kitronik_motor_driver.MotorDirection.Forward, 
-            Math.abs(speedRight))
+        kitronik_klip_motor.motorOn(
+            kitronik_klip_motor.Motors.Motor2, 
+            kitronik_klip_motor.MotorDirection.Forward, speedLeft)
     }
+    //basic.showString(speedLeft.toString() + ";" + speedRight.toString())
 })
-
-
-let arr: string[] = []
 let speedRight = 0
 let speedLeft = 0
-basic.forever(function () {
-	
-})
+let arr: string[] = []
+radio.setGroup(256)
